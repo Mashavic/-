@@ -1,30 +1,22 @@
 #include "global.h"
 
-char map[ROWS][COLS];
-
 int game(void) {
+  char map[ROWS][COLS];
   int command_player;
   int y = 11, x = 11;
-
-  initscr();
-  keypad(stdscr, TRUE);  // on addition keys
-  noecho();              // don`t display input
-  curs_set(0);           // off curs
-
+  settings_ncurses();
   do {
     clear();
-    dungeon();
-    movement(command_player, &y, &x);
-
+    dungeon(map);
+    movement(map, command_player, &y, &x);
   } while ((command_player = getch()) != ('q' | 'Q'));
 
   getch();
   endwin();
-
   return 0;
 }
 
-void dungeon(void) {
+void dungeon(char (*map)[COLS]) {
   for (int yy = 0; yy <= ROWS; yy++) {
     for (int xx = 0; xx <= COLS; xx++) {
       if (yy == 0 || xx == 0 || yy == ROWS || xx == COLS) {
@@ -35,7 +27,7 @@ void dungeon(void) {
   }
 }
 
-void movement(int command_player, int *y, int *x) {
+void movement(char (*map)[COLS], int command_player, int *y, int *x) {
   int temp_y = *y;
   int temp_x = *x;
   if ((command_player == UP) && (map[temp_y - 1][temp_x] != '#'))
@@ -49,4 +41,11 @@ void movement(int command_player, int *y, int *x) {
   *y = temp_y;
   *x = temp_x;
   mvaddch(temp_y, temp_x, CHARACTER);  // print cursor
+}
+
+void settings_ncurses() {
+  initscr();
+  keypad(stdscr, TRUE);  // on addition keys
+  noecho();              // don`t display input
+  curs_set(0);           // off curs
 }

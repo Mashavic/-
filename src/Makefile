@@ -7,10 +7,10 @@ O_FILE:=game
 
 LNCURSES:=-lncurses
 
-all: clean
+all: clean clang
 	gcc $(FILE_MAIN).c $(FILE_BASIC).c -o $(O_FILE).exe $(LNCURSES)
 
-run: clean
+run: clean clang
 	gcc $(FILE_MAIN).c $(FILE_BASIC).c -o $(O_FILE).exe $(LNCURSES)
 	./$(O_FILE).exe
 
