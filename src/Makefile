@@ -10,17 +10,15 @@ LNCURSES:=-lncurses
 all: clean
 	gcc $(FILE_MAIN).c $(FILE_BASIC).c -o $(O_FILE).exe $(LNCURSES)
 
-run:clean
+run: clean
 	gcc $(FILE_MAIN).c $(FILE_BASIC).c -o $(O_FILE).exe $(LNCURSES)
 	./$(O_FILE).exe
 
 clean:
 	rm -rf *.exe *.out
 
-style:
-	cp ../materials/linters/.clang-format ../src/.clang-format
+clang:
 	clang-format -style=Google -i *.c *.h
-	rm .clang-format
 
 install_Linux:
 	sudo apt install clang-format
